@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <link rel="icon" href="logo.png" type="image/png">
+
+  <meta charset="UTF-8" />
+  <title>Spotted Świętokrzyskie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <!-- AOS CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    /* --- Podstawowy motyw jasny --- */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: #f9fafb;
+      color: #222;
+      line-height: 1.6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    header {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 25px 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #ecf0f1;
+    }
+
+    nav.nav {
+      display: flex;
+      gap: 25px;
+    }
+
+    nav.nav a {
+      color: #ecf0f1;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      font-size: 1rem;
+    }
+
+    nav.nav a:hover,
+    nav.nav a:focus {
+      color: #3498db;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      width: 30px;
+      height: 25px;
+      justify-content: space-between;
+    }
+
+    .menu-toggle .bar {
+      height: 4px;
+      width: 100%;
+      background-color: #ecf0f1;
+      border-radius: 2px;
+    }
+
+    main {
+      padding: 30px 15px;
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    section {
+      margin-bottom: 50px;
+    }
+
+    h2 {
+      font-weight: 600;
+      color: #34495e;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #3498db;
+      display: inline-block;
+      padding-bottom: 5px;
+      transition: color 0.3s ease;
+    }
+
+    .form-box {
+      background: #fefefe;
+      padding: 25px 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    textarea,
+    input,
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-family: 'Poppins', sans-serif;
+      transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    }
+
+    textarea:focus,
+    input:focus {
+      outline: none;
+      border-color: #3498db;
+      background-color: #fff;
+      color: #222;
+    }
+
+    button {
+      background: #3498db;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      border-radius: 6px;
+    }
+
+    button:hover,
+    button:focus {
+      background: #2980b9;
+    }
+
+    iframe {
+      width: 100%;
+      height: 400px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: filter 0.3s ease;
+    }
+
+    #status-msg {
+      font-size: 0.95rem;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    footer {
+      background: #2c3e50;
+      color: #ecf0f1;
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 0.9em;
+      margin-top: 40px;
+      border-top: 1px solid #34495e;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .faq-item {
+      margin-bottom: 20px;
+    }
+
+    .faq-question {
+      background-color: #3498db;
+      color: white;
+      padding: 12px 16px;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .faq-question:hover {
+      background-color: #2980b9;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      background: #ecf0f1;
+      border-left: 4px solid #3498db;
+      padding: 0 15px;
+      border-radius: 0 0 5px 5px;
+      transition: max-height 0.4s ease, padding 0.4s ease, background-color 0.3s ease, color 0.3s ease;
+      color: #222;
+    }
+
+    .faq-answer.open {
+      padding: 15px;
+      max-height: 300px;
+    }
+
+    @media (max-width: 768px) {
+      nav.nav {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        margin-top: 15px;
+        background: #2c3e50;
+        padding: 10px 0;
+        border-top: 1px solid #34495e;
+      }
+
+      nav.nav.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      header h1 {
+        font-size: 1.4rem;
+      }
+    }
+
+    /* --- CIEMNY MOTYW --- */
+    body.dark {
+      background: #121212;
+      color: #e0e0e0;
+    }
+
+    body.dark header {
+      background: #1e1e1e;
+      color: #e0e0e0;
+      box-shadow: 0 2px 5px rgba(255 255 255 / 0.1);
+    }
+
+    body.dark header h1 {
+      color: #e0e0e0;
+    }
+
+    body.dark nav.nav {
+      background: #1e1e1e;
+    }
+
+    body.dark nav.nav a {
+      color: #e0e0e0;
+    }
+
+    body.dark nav.nav a:hover,
+    body.dark nav.nav a:focus {
+      color: #82aaff;
+    }
+
+    body.dark main {
+      background: #1e1e1e;
+      color: #e0e0e0;
+      box-shadow: 0 4px 10px rgba(255 255 255 / 0.1);
+    }
+
+    body.dark h2 {
+      color: #82aaff;
+      border-bottom-color: #82aaff;
+    }
+
+    body.dark .form-box {
+      background: #2c2c2c;
+      color: #e0e0e0;
+      box-shadow: 0 2px 8px rgba(255 255 255 / 0.1);
+    }
+
+    body.dark textarea,
+    body.dark input {
+      background-color: #333;
+      border-color: #555;
+      color: #e0e0e0;
+    }
+
+    body.dark textarea:focus,
+    body.dark input:focus {
+      background-color: #444;
+      border-color: #82aaff;
+      color: #e0e0e0;
+    }
+
+    body.dark button {
+      background: #82aaff;
+      color: #121212;
+    }
+
+    body.dark button:hover,
+    body.dark button:focus {
+      background: #5a87d9;
+    }
+
+    body.dark iframe {
+      filter: brightness(0.8);
+    }
+
+    body.dark footer {
+      background: #1e1e1e;
+      color: #e0e0e0;
+      border-top-color: #555;
+    }
+
+    body.dark .faq-question {
+      background-color: #82aaff;
+      color: #121212;
+    }
+
+    body.dark .faq-question:hover {
+      background-color: #5a87d9;
+    }
+
+    body.dark .faq-answer {
+      background: #2c2c2c;
+      color: #e0e0e0;
+      border-left-color: #82aaff;
+    }
+
+    /* --- Toggle motywu w header --- */
+    #theme-toggle {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #ecf0f1;
+      font-size: 1.5rem;
+      margin-left: 20px;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    #theme-toggle:hover,
+    #theme-toggle:focus {
+      color: #82aaff;
+      outline: none;
+    }
+    @keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+header {
+  background: linear-gradient(270deg, #2c3e50, #3498db, #2c3e50);
+  background-size: 600% 600%;
+  animation: gradientBG 15s ease infinite;
+}
+  </style>
+</head>
+
+<body>
+<header>
+ 
+  <div style="display:flex; align-items:center;">
+    <img src="logo.png" alt="Spotted Świętokrzyskie" style="height: 60px; margin-right: 10px;">
+    <h1>Spotted Świętokrzyskie</h1>
+  </div>
+
+  <div style="display: flex; align-items: center;">
+    <button id="theme-toggle" aria-label="Przełącz motyw ciemny/ jasny" title="Przełącz motyw">
+      🌙
+    </button>
+
+    <div class="menu-toggle" id="mobile-menu" aria-label="Menu mobilne" role="button" tabindex="0">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+  </div>
+
+  <nav class="nav" role="navigation" aria-label="Menu główne">
+    <a href="#zgloszenie">Zgłoś</a>
+    <a href="#instagram">Instagram</a>
+    <a href="#kontakt">Kontakt</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+</header>
+
+<main>
+  <section id="zgloszenie" data-aos="fade-up">
+    <h2>Zgłoś wiadomość anonimowo</h2>
+    <div class="form-box" data-aos="zoom-in">
+      <p>Twoja wiadomość zostanie przesłana anonimowo do administratora.</p>
+      <form action="https://formspree.io/f/meokbjqv" method="POST" id="kontakt-form">
+        <textarea name="message" placeholder="Wpisz wiadomość..." required></textarea>
+        <input type="email" name="_replyto" placeholder="Twój email (opcjonalnie)">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1">
+        <button type="submit">Wyślij</button>
+        <p id="status-msg"></p>
+      </form>
+    </div>
+  </section>
+
+  <section id="instagram" data-aos="fade-up">
+    <h2>Nasze najnowsze posty</h2>
+    <div class="form-box" data-aos="zoom-in">
+      <iframe src="https://snapwidget.com/embed/123456" allowtransparency="true"></iframe>
+      <p>Obserwuj nas na <a href="https://instagram.com/spottedswietokrzyskieofc" target="_blank" rel="noopener noreferrer">@spottedswietokrzyskieofc</a></p>
+    </div>
+  </section>
+
+  <section id="kontakt" data-aos="fade-up">
+    <h2>Kontakt i współpraca</h2>
+    <div class="form-box" data-aos="zoom-in">
+      <p>Masz pytania lub chcesz się zareklamować?</p>
+      <p>Napisz na: <a href="mailto:spottedswietokrzyskieofc@gmail.com">spottedswietokrzyskieofc@gmail.com</a></p>
+      <p>Albo wyślij wiadomość przez <a href="https://instagram.com/spottedswietokrzyskieofc" target="_blank" rel="noopener noreferrer">Instagram</a>.</p>
+    </div>
+  </section>
+
+  <section id="faq" data-aos="fade-up">
+    <h2>Najczęściej zadawane pytania</h2>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">Jak anonimowe są zgłoszenia?</button>
+      <div class="faq-answer" role="region" aria-hidden="true">
+        Twoje zgłoszenie trafia bezpośrednio do administratora formularza – nie widzimy Twojego e-maila ani danych osobowych.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">Czy mogę edytować swoje zgłoszenie?</button>
+      <div class="faq-answer" role="region" aria-hidden="true">
+        Nie – po wysłaniu formularza nie ma możliwości edycji. W razie potrzeby skontaktuj się bezpośrednio przez e-mail lub Instagram.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">Kiedy moje zgłoszenie zostanie opublikowane?</button>
+      <div class="faq-answer" role="region" aria-hidden="true">
+        Zgłoszenia są przeglądane w ciągu 24 godzin. Jeśli zostanie zaakceptowane, pojawi się na Instagramie.
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 Spotted Świętokrzyskie. Wszelkie prawa zastrzeżone.
+</footer>
+
+<!-- AOS JS -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+  // Inicjalizacja AOS
+  AOS.init({
+    duration: 800,
+    once: true
+  });
+
+  // Hamburger toggle
+  const menuToggle = document.getElementById('mobile-menu');
+  const nav = document.querySelector('nav.nav');
+
+  menuToggle.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    menuToggle.classList.toggle('active');
+  });
+
+  menuToggle.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      nav.classList.toggle('active');
+      menuToggle.classList.toggle('active');
+    }
+  });
+
+  // Formspree integration
+  const form = document.getElementById('kontakt-form');
+  const statusMsg = document.getElementById('status-msg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      statusMsg.textContent = 'Dziękujemy! Wiadomość została wysłana.';
+      statusMsg.style.color = 'green';
+      form.reset();
+    } else {
+      statusMsg.textContent = 'Ups! Coś poszło nie tak. Spróbuj ponownie.';
+      statusMsg.style.color = 'red';
+    }
+  });
+
+  // FAQ toggle (z aria)
+  document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+      const answer = button.nextElementSibling;
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', !expanded);
+      answer.classList.toggle('open');
+      answer.setAttribute('aria-hidden', expanded);
+    });
+  });
+
+  // Dark mode toggle
+  const themeToggleBtn = document.getElementById('theme-toggle');
+
+  function setTheme(dark) {
+    if (dark) {
+      document.body.classList.add('dark');
+      themeToggleBtn.textContent = '☀️';
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.body.classList.remove('dark');
+      themeToggleBtn.textContent = '🌙';
+      localStorage.setItem('theme', 'light');
+    }
+  }
+
+  // Check stored theme on load
+  const storedTheme = localStorage.getItem('theme');
+  if (storedTheme === 'dark') {
+    setTheme(true);
+  } else {
+    setTheme(false);
+  }
+
+  themeToggleBtn.addEventListener('click', () => {
+    const isDark = document.body.classList.contains('dark');
+    setTheme(!isDark);
+  });
+</script>
+</body>
+</html>
